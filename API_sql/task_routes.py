@@ -20,3 +20,17 @@ def create_task(tasks: Task_Schema):
                                           "description": tasks.description}))
   db_session.commit()
   db_session.close()
+  
+@task.delete("/tasks/{id}")
+def delete_task(id: int):
+    db_session.execute(Delete(Task).where(Task.id == id))
+    db_session.commit()
+    db_session.close()
+
+@task.put("/tasks/{id}")
+def update_task(id: int, tasks: Task_Schema):
+  db_session.execute(Update(Task).where(Task.id == id).values({"task_name": tasks.task_name, 
+                                                               "description": tasks.description}))
+  db_session.commit()
+  db_session.close()
+  
